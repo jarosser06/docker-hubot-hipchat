@@ -10,12 +10,15 @@ RUN apt-get -y install wget python-dev g++ make
 RUN apt-get -y install libexpat1-dev libicu-dev
 RUN apt-get -y install supervisor
 RUN apt-get -y install redis-server
-ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 RUN npm install --global coffee-script hubot@v2.6.4
 RUN hubot --create /opt/hubot
 WORKDIR /opt/hubot
 RUN npm install
 RUN npm install --save hubot-hipchat
+RUN npm install --save nodepie
+
+ADD ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+ADD ./hubot-scripts.json /opt/hubot/hubot-scripts.json
 
 CMD ["supervisord", "-n"]
